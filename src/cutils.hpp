@@ -58,7 +58,7 @@ inline void log(logType typ, std::string_view text) {
         std::cout << rang::fg::cyan << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
     }
     else if (typ == Error || typ == Fatal) {
-        std::cout << rang::fg::red << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
+        std::cerr << rang::fg::red << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
     }
     else if (typ == Warn) {
         std::cout << rang::fg::yellow << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
