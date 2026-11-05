@@ -12,7 +12,7 @@ Or
 ```bash
 git clone https://github.com/dryfish09/cutils.git
 ```
-2. Copy source its source code to your project
+2. Copy its source code to your project
 ```bash
 cd cutils/src && cp * ur/project/path
 ```
@@ -30,12 +30,16 @@ fih::quit(99);
 ```
 3. Ask
 ```cpp
-fih::ask("are you gay?");
+fih::ask("hi, how are you today?");
 ```
 4. Colorful print
 ```cpp
 fih::printc("msg", fih::Blue);
 ```
+> [!WARNING]
+> `fih::quit(int code)` just flush stdout, stderr, exit, it doesn't destruct constructor, free pointers, etc.
+>
+> Use with you own risk!
 
 **For more example, view [CUtils's code examples](./examples/)**
 ### Advanced use
@@ -46,5 +50,12 @@ Contribute to this project
 - [ ] JSON
 - [ ] Corountines
 - [ ] Kotlin/C# features/QoL (not GC)
+
+### License
+This library is free to use, under the **MIT license**, iew [License file](LICENSE) for more details.
+#### Credit:
+This library use `rang` — a simple, lightweigh console color library, license: The Unlicense
+<!-- TODO: add author and repo link -->
+Thanks C++ for a good language and awesome `std` library, thanks library authors very much, thank you for visiting!
 
 *Made with :fish: by @dryfish09, Thanks for visiting!*
