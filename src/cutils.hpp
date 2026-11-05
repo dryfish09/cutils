@@ -162,10 +162,13 @@ inline void delayForSec(int sec) {
         quit(1);
     }
 }
-inline void printAnim(std::string_view msg, int ms_per_char) {
+inline void printAnim(std::string_view msg, int char_per_ms) {
     for (char c : msg) {
+        if(char_per_ms <= 0) {
+            std::cout << c << std::flush;
+        }
         std::cout << c << std::flush; 
-        delayForMillisec(ms_per_char);
+        delayForMillisec(char_per_ms);
     }
     std::cout << '\n';
 }
