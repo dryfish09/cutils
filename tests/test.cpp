@@ -16,6 +16,9 @@ void test_ani() {
 void test_colored_printing() {
     printc("txt", Red);
     printc("t", Cyan);
+    std::cout << "" << std::endl;
+    printcl("sr", Blue);
+    printcl("ssss", Red);
     
     setBg(Blue);
     resetBg();
