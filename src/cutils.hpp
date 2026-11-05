@@ -84,7 +84,7 @@ inline std::string ask(std::string_view question) {
 }
 // print colorful (printc)
 // usage: printc("text", Red);
-inline void printc(std::string_view msg, color col) {
+inline void printcl(std::string_view msg, color col) {
     switch (col) {
         case Red:
         std::cout << rang::fg::red;
@@ -112,6 +112,35 @@ inline void printc(std::string_view msg, color col) {
         break;
     }
     std::cout << msg << rang::style::reset << '\n';
+}
+inline void printc(std::string_view msg, color col) {
+    switch (col) {
+        case Red:
+        std::cout << rang::fg::red;
+        break;
+        case Green:
+        std::cout << rang::fg::green;
+        break;
+        case Blue:
+        std::cout << rang::fg::blue;
+        break;
+        case Gray:
+        std::cout << rang::fg::gray;
+        break;
+        case Cyan:
+        std::cout << rang::fg::cyan;
+        break;
+        case Yellow:
+        std::cout << rang::fg::yellow;
+        break;
+        case Magenta:
+        std::cout << rang::fg::magenta;
+        break;
+        case Black:
+        std::cout << rang::fg::black;
+        break;
+    }
+    std::cout << msg << rang::style::reset;
 }
 inline void setBg(color col) {
     switch (col) {
