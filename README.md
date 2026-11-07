@@ -48,7 +48,7 @@ Contribute to this project
 - [ ] Basic console QoL
 - [ ] File I/O wrapper
 - [ ] JSON
-- [ ] Corountines
+- [ ] Coroutines
 - [ ] Kotlin/C# features/QoL (not GC)
 
 ### License
