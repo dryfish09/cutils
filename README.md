@@ -52,7 +52,7 @@ Contribute to this project
 - [ ] Kotlin/C# features/QoL (not GC)
 
 ### License
-This library is free to use, under the **MIT license**, iew [License file](LICENSE) for more details.
+This library is free to use, under the **MIT license**, view [License file](LICENSE) for more details.
 #### Credit:
 This library use `rang` — a simple, lightweigh console color library, license: The Unlicense
 <!-- TODO: add author and repo link -->
