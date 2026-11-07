@@ -202,4 +202,7 @@ inline void printAnim(std::string_view msg, int char_per_ms) {
     }
     std::cout << '\n';
 }
+inline void clearConsole() {
+    std::cout << "\033[2J\033[1;1H";
+}
 } // namespace fih
