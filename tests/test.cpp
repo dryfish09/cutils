@@ -9,6 +9,9 @@ void test_logging() {
     log(Error, "smoke test: error");
     log(Fatal, "smoke test: fatal");
 }
+void test_clear_c() {
+    clearConsole();
+}
 void test_ani() {
     printAnim("ssggggggggtddhffffffffffffftttggggg", 40);
 }
@@ -38,5 +41,6 @@ int main() {
     test_colored_printing();
     test_delays();
     test_ani();
+    test_clear_c();
     return 0;
 }
