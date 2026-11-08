@@ -3,6 +3,8 @@
 // NOTE: THIS LIB IS IN DEVELOPMENT, you know...
 
 #pragma once 
+#ifndef CUTILS_HPP_INCLUDED
+#define CUTILS_HPP_INCLUDED
 #include "./libs/rang.hpp"
 #include <string>
 #include <iostream>
@@ -206,3 +208,4 @@ inline void clearConsole() {
     std::cout << "\033[2J\033[1;1H";
 }
 } // namespace fih
+#endif // CUTILS_HPP_INCLUDED
