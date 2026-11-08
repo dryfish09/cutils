@@ -31,7 +31,7 @@ enum color {
     Magenta,
     Black
 };
-inline const char* enumToString(logType type) {
+inline const char* _enumToString(logType type) {
     switch(type) {
         case Info:
         return "INFO";
@@ -55,7 +55,7 @@ inline const char* enumToString(logType type) {
     - log(Warn, "Additional deps not found");
 */
 inline void log(logType typ, std::string_view text) {
-    const char* type = enumToString(typ);
+    const char* type = _enumToString(typ);
     if (typ == Info) {
         std::cout << rang::fg::cyan << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
     }
