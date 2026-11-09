@@ -151,7 +151,9 @@ inline void setBg(color col) {
 inline void resetBg() {
     std::cout << rang::bg::reset;
 }
-
+inline void resetAll() {
+    std::cout << rang::bg::reset << rang::style::reset;
+}
 inline void delayForMillisec(int ms) {
     if (ms > 0) {
         std::this_thread::sleep_for(std::chrono::milliseconds(ms));
