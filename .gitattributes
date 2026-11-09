@@ -1,0 +1,52 @@
+# Normalize line endings on commit; check out native on each platform
+* text=auto
+
+# Source code — always LF in repo
+*.cpp   text eol=lf
+*.hpp   text eol=lf
+*.h     text eol=lf
+*.hxx   text eol=lf
+*.c     text eol=lf
+*.cc    text eol=lf
+*.cxx   text eol=lf
+
+# Build scripts
+CMakeLists.txt  text eol=lf
+*.cmake         text eol=lf
+
+# CI / tooling
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.json  text eol=lf
+*.sh    text eol=lf
+
+# Windows-only scripts need CRLF to run
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Docs
+*.md    text eol=lf
+*.txt   text eol=lf
+LICENSE text eol=lf
+
+# Binary — never touch
+*.exe   binary
+*.dll   binary
+*.lib   binary
+*.a     binary
+*.so    binary
+*.dylib binary
+*.o     binary
+*.obj   binary
+*.pdb   binary
+*.png   binary
+*.jpg   binary
+*.ico   binary
+
+# Vendored third-party code — do not normalize or count
+src/libs/** -text linguist-vendored
+
+# Language detection on GitHub
+*.hpp   linguist-language=C++
+*.h     linguist-language=C++
