@@ -189,8 +189,7 @@ inline void delayForSec(int sec) {
     if (sec > 0) {
         std::this_thread::sleep_for(std::chrono::seconds(sec));
     } else {
-        log(Fatal, "Invalid delay agrument");
-        quit(1);
+        throw std::invalid_argument("Delay argument must be > 0, got " + std::to_string(sec));
     }
 }
 inline void printAnim(std::string_view msg, int char_per_ms) {
