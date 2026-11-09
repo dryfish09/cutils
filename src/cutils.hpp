@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <thread>
 #include <chrono>
+#include <stdexcept>
 namespace fih {
 // log type enum
 enum logType {
@@ -180,8 +181,7 @@ inline void delayForMillisec(int ms) {
     if (ms > 0) {
         std::this_thread::sleep_for(std::chrono::milliseconds(ms));
     } else {
-        log(Fatal, "Invalid delay agrument");
-        quit(1);
+        throw std::invalid_argument("Delay argument must be > 0, got " + std::to_string(ms));
     }
 }
 
