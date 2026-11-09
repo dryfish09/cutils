@@ -1,4 +1,3 @@
-// test_cutils.cpp
 #define CATCH_CONFIG_MAIN
 #include "../src/libs/catch.hpp"
 #include "cutils.hpp"
@@ -31,14 +30,13 @@ struct CinRedirect {
     ~CinRedirect() { std::cin.rdbuf(old); }
 };
 
-// rang tự tắt màu khi không phải TTY → phải force để test ANSI
 struct ForceColor {
     ForceColor()  { rang::setControlMode(rang::control::Force); }
     ~ForceColor() { rang::setControlMode(rang::control::Auto); }
 };
 
 // ---------- log ----------
-TEST_CASE("log Info/Debug/Warn ghi ra stdout", "[log]") {
+TEST_CASE("log Info/Debug/Warn writes to stdout", "[log]") {
     CoutCapture cap;
     log(Info,  "hello");
     log(Warn,  "careful");
@@ -52,7 +50,7 @@ TEST_CASE("log Info/Debug/Warn ghi ra stdout", "[log]") {
     REQUIRE(s.find("careful") != std::string::npos);
 }
 
-TEST_CASE("log Error/Fatal ghi ra stderr", "[log]") {
+TEST_CASE("log Error/Fatal writes to stderr", "[log]") {
     CerrCapture err;
     CoutCapture out;
     log(Error, "oops");
@@ -63,22 +61,21 @@ TEST_CASE("log Error/Fatal ghi ra stderr", "[log]") {
 }
 
 // ---------- delay ----------
-TEST_CASE("delayForMillisec throw với ms <= 0", "[delay]") {
+TEST_CASE("delayForMillisec throws on ms <= 0", "[delay]") {
     REQUIRE_THROWS_AS(delayForMillisec(0),  std::invalid_argument);
     REQUIRE_THROWS_AS(delayForMillisec(-1), std::invalid_argument);
 }
 
-TEST_CASE("delayForSec throw với sec <= 0", "[delay]") {
+TEST_CASE("delayForSec throws on sec <= 0", "[delay]") {
     REQUIRE_THROWS_AS(delayForSec(0),  std::invalid_argument);
     REQUIRE_THROWS_AS(delayForSec(-5), std::invalid_argument);
 }
 
-TEST_CASE("delayForMillisec không throw với ms > 0", "[delay]") {
+TEST_CASE("delayForMillisec does not throw when ms > 0", "[delay]") {
     REQUIRE_NOTHROW(delayForMillisec(1));
-    REQUIRE_NOTHROW(delayForSec(1) == 0 ? throw 0 : void());  // 1s hơi lâu, có thể bỏ
 }
 
-TEST_CASE("message của exception chứa giá trị sai", "[delay]") {
+TEST_CASE("exception message contains the invalid value", "[delay]") {
     try {
         delayForMillisec(-42);
         FAIL("should have thrown");
@@ -88,7 +85,7 @@ TEST_CASE("message của exception chứa giá trị sai", "[delay]") {
 }
 
 // ---------- print colored ----------
-TEST_CASE("printc in text + ANSI, không newline", "[color]") {
+TEST_CASE("printc writes text with ANSI, no newline", "[color]") {
     ForceColor fc;
     CoutCapture cap;
     printc("hi", Red);
@@ -99,7 +96,7 @@ TEST_CASE("printc in text + ANSI, không newline", "[color]") {
     REQUIRE(s.back() != '\n');
 }
 
-TEST_CASE("printcl in text + ANSI + newline", "[color]") {
+TEST_CASE("printcl writes text with ANSI and newline", "[color]") {
     ForceColor fc;
     CoutCapture cap;
     printcl("hi", Blue);
@@ -109,7 +106,7 @@ TEST_CASE("printcl in text + ANSI + newline", "[color]") {
     REQUIRE(s.back() == '\n');
 }
 
-TEST_CASE("setBg/resetBg ghi ANSI hợp lệ", "[color]") {
+TEST_CASE("setBg/resetBg emit valid ANSI", "[color]") {
     ForceColor fc;
     CoutCapture cap;
     setBg(Cyan);
@@ -120,7 +117,7 @@ TEST_CASE("setBg/resetBg ghi ANSI hợp lệ", "[color]") {
     REQUIRE(s.size() > 0);
 }
 
-TEST_CASE("resetAll ghi reset ANSI", "[color]") {
+TEST_CASE("resetAll emits ANSI reset", "[color]") {
     ForceColor fc;
     CoutCapture cap;
     resetAll();
@@ -128,42 +125,41 @@ TEST_CASE("resetAll ghi reset ANSI", "[color]") {
 }
 
 // ---------- ask ----------
-TEST_CASE("ask trả về đúng input user", "[ask]") {
+TEST_CASE("ask returns the user's input", "[ask]") {
     CinRedirect input("Alice\n");
     CoutCapture output;
     REQUIRE(ask("Name?") == "Alice");
 }
 
-TEST_CASE("ask trả về chuỗi rỗng nếu input rỗng", "[ask]") {
+TEST_CASE("ask returns empty string on empty input", "[ask]") {
     CinRedirect input("\n");
     CoutCapture output;
     REQUIRE(ask("Name?") == "");
 }
 
-TEST_CASE("ask giữ nguyên spaces", "[ask]") {
+TEST_CASE("ask preserves surrounding spaces", "[ask]") {
     CinRedirect input("  Alice Smith  \n");
     CoutCapture output;
     REQUIRE(ask("Name?") == "  Alice Smith  ");
 }
 
 // ---------- clearConsole ----------
-TEST_CASE("clearConsole ghi ANSI clear screen", "[console]") {
+TEST_CASE("clearConsole emits ANSI clear screen", "[console]") {
     CoutCapture cap;
     clearConsole();
-    REQUIRE(cap.str().find("\033[2J") != std::string::npos);
+    REQUIRE(cap.str().find("\033[2J")   != std::string::npos);
     REQUIRE(cap.str().find("\033[1;1H") != std::string::npos);
 }
 
 // ---------- printAnim ----------
-TEST_CASE("printAnim với delay 0 in ngay, kết thúc bằng newline", "[anim]") {
+TEST_CASE("printAnim with zero delay prints instantly and ends with newline", "[anim]") {
     CoutCapture cap;
     printAnim("abc", 0);
     REQUIRE(cap.str() == "abc\n");
 }
 
-TEST_CASE("printAnim giữ nguyên nội dung", "[anim]") {
+TEST_CASE("printAnim preserves message content", "[anim]") {
     CoutCapture cap;
     printAnim("hello", 0);
     REQUIRE(cap.str().find("hello") != std::string::npos);
 }
-
