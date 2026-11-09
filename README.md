@@ -55,7 +55,9 @@ Contribute to this project
 This library is free to use, under the **MIT license**, view [License file](LICENSE) for more details.
 #### Credit:
 This library use `rang` — a simple, lightweigh console color library, license: The Unlicense
-<!-- TODO: add author and repo link -->
+
+I also use Catch2 for testing, thanks Catch2 team!
+
 Thanks C++ for a good language and awesome `std` library, thanks library authors very much, thank you for visiting!
 
 *Made with :fish: by @dryfish09, Thanks for visiting!*
