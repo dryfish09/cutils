@@ -1,6 +1,6 @@
 // test_cutils.cpp
 #define CATCH_CONFIG_MAIN
-#include "..src/libs/catch.hpp"
+#include "../src/libs/catch.hpp"
 #include "cutils.hpp"
 #include <sstream>
 #include <string>
