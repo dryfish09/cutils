@@ -14,51 +14,35 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
-            compiler: gcc
-            cxx: g++
-          - os: ubuntu-latest
-            compiler: clang
-            cxx: clang++
-          - os: windows-latest
-            compiler: msvc
-            cxx: cl
-          - os: macos-latest
-            compiler: clang
-            cxx: clang++
+          - { os: ubuntu-latest,  compiler: gcc,         cxx: g++ }
+          - { os: ubuntu-latest,  compiler: clang,       cxx: clang++ }
+          - { os: windows-latest, compiler: msvc,        cxx: cl }
+          - { os: macos-latest,   compiler: appleclang,  cxx: clang++ }
 
     steps:
       - uses: actions/checkout@v7
 
       - name: Configure
-        run: cmake -S . -B build -DCONSOLEUTIL_BUILD_TESTS=ON
-        env:
-          CXX: ${{ matrix.cxx }}
+        run: cmake -S . -B build -DCONSOLEUTIL_BUILD_TESTS=ON -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
 
-      - name: Build and test
-        run: |
-          cmake --build build --config Release --verbose
-          ctest --test-dir build -C Release --output-on-failure
+      - name: Build
+        run: cmake --build build --config Release --verbose
 
-      - name: Verify test actually ran
+      - name: Test (verbose)
+        run: ctest --test-dir build -C Release -V
+
+      - name: Verify tests were discovered
         shell: bash
         run: |
-          echo "=== Test count ==="
-          ctest --test-dir build -C Release -N
-          echo "=== Test binary ==="
-          find build -name "test*" -type f | head -20
+          count=$(ctest --test-dir build -C Release -N | grep -c "Test #")
+          echo "Discovered $count test(s)"
+          [ "$count" -gt 0 ] || { echo "::error::No tests discovered"; exit 1; }
 
-  header-check:
-    name: Header self-contained
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: List header files
-        run: find . -name "cutils.hpp" -o -name "rang.hpp"
-
-      - name: Compile header alone
+      - name: Header is self-contained
+        if: matrix.cxx != 'cl'
         run: |
-          echo '#include "cutils.hpp"
-          int main() { return 0; }' > check.cpp
-          g++ -std=c++17 -Isrc -fsyntax-only check.cpp
+          printf '%s\n' \
+            '#include "cutils.hpp"' \
+            'int main() { return 0; }' \
+            > check.cpp
+          ${{ matrix.cxx }} -std=c++17 -Isrc -fsyntax-only check.cpp
