@@ -224,3 +224,8 @@ TEST_CASE("printAnim with empty message prints only a newline", "[anim]") {
     printAnim("", 0);
     REQUIRE(cap.str() == "\n");
 }
+TEST_CASE("getCurrentTime works", "[time]") {
+    CoutCapture cap
+    getCurrentTime();
+    REQUIRE(cap.str() != "");
+}
