@@ -13,6 +13,8 @@
 #include <thread>
 #include <chrono>
 #include <stdexcept>
+#include <ctime>
+#include <cstring>
 namespace fih {
 // log type enum
 enum logType {
@@ -182,6 +184,18 @@ inline void printAnim(std::string_view msg, int char_per_ms) {
 }
 inline void clearConsole() {
     std::cout << "\033[2J\033[1;1H";
+}
+inline std::string getCurrentTime(const char* fmt = "%Y-%m-%d %H:%M:%S") {
+    std::time_t now = std::time(nullptr);
+    std::tm tm_buf{};
+#if defined(_WIN32)
+    localtime_s(&tm_buf, &now);
+#else
+    localtime_r(&now, &tm_buf);
+#endif
+    char buf[64];
+    std::strftime(buf, sizeof(buf), fmt, &tm_buf);
+    return buf;
 }
 } // namespace fih
 #endif // CUTILS_HPP_INCLUDED
