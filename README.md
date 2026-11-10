@@ -1,5 +1,5 @@
-# DryFish's Console Utils library
-CUtils (Console Utils) is a **simple, ez to use** console utils library for command-line app programming
+# DryFish's Console Utilities library
+CUtils (Console Utilities) is a **simple, ez to use** console utililties library for command-line app programming
 ## Requirement
 C++ 17+ (for future updates), C++ projects, all dependencies are included in this library, you just need to add it to your project, then use.
 ## Usage
