@@ -3,6 +3,9 @@ name: CI
 on:
   push:
     branches: [ main, master ]
+    paths:
+      - src/**
+      - tests/**
   pull_request:
   workflow_dispatch:
 
