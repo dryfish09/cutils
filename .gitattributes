@@ -44,9 +44,6 @@ LICENSE text eol=lf
 *.jpg   binary
 *.ico   binary
 
-# Vendored third-party code — do not normalize or count
-src/libs/** -text linguist-vendored
-
 # Language detection on GitHub
 *.hpp   linguist-language=C++
 *.h     linguist-language=C++
