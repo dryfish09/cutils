@@ -224,3 +224,13 @@ TEST_CASE("printAnim with empty message prints only a newline", "[anim]") {
     printAnim("", 0);
     REQUIRE(cap.str() == "\n");
 }
+TEST_CASE("getCurrentTime returns non-empty string", "[time]") {
+    auto s = getCurrentTime();
+    REQUIRE(s.size() >= 19);  
+}
+
+TEST_CASE("getCurrentTime prints when streamed", "[time]") {
+    CoutCapture cap;
+    std::cout << getCurrentTime();
+    REQUIRE_FALSE(cap.str().empty());
+}
