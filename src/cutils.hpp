@@ -225,5 +225,8 @@ inline std::string getCurrentTime(const char* fmt = "%Y-%m-%d %H:%M:%S") {
     std::strftime(buf, sizeof(buf), fmt, &tm_buf);
     return buf;
 }
+inline void resetFg() {
+    std::cout << rang::style::reset;
+}
 } // namespace fih
 #endif // CUTILS_HPP_INCLUDED
