@@ -50,6 +50,34 @@ inline const char* _enumToString(logType type) {
         return "UNKNOWN";
     }
 }
+inline void _setFg(color col) {
+    switch (col) {
+        case Red:
+        std::cout << rang::fg::red;
+        break;
+        case Green:
+        std::cout << rang::fg::green;
+        break;
+        case Blue:
+        std::cout << rang::fg::blue;
+        break;
+        case Gray:
+        std::cout << rang::fg::gray;
+        break;
+        case Cyan:
+        std::cout << rang::fg::cyan;
+        break;
+        case Yellow:
+        std::cout << rang::fg::yellow;
+        break;
+        case Magenta:
+        std::cout << rang::fg::magenta;
+        break;
+        case Black:
+        std::cout << rang::fg::black;
+        break;
+    }
+}
         
 /* 
     log(type, string text);
@@ -61,6 +89,7 @@ inline void log(logType typ, std::string_view text) {
     const char* type = _enumToString(typ);
     if (typ == Info) {
         std::cout << rang::fg::cyan << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
+    
     }
     else if (typ == Error || typ == Fatal) {
         std::cerr << rang::fg::red << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
@@ -88,32 +117,7 @@ inline std::string ask(std::string_view question) {
     return answer;
 }
 inline void printc(std::string_view msg, color col) {
-    switch (col) {
-        case Red:
-        std::cout << rang::fg::red;
-        break;
-        case Green:
-        std::cout << rang::fg::green;
-        break;
-        case Blue:
-        std::cout << rang::fg::blue;
-        break;
-        case Gray:
-        std::cout << rang::fg::gray;
-        break;
-        case Cyan:
-        std::cout << rang::fg::cyan;
-        break;
-        case Yellow:
-        std::cout << rang::fg::yellow;
-        break;
-        case Magenta:
-        std::cout << rang::fg::magenta;
-        break;
-        case Black:
-        std::cout << rang::fg::black;
-        break;
-    }
+    _setFg(col);
     std::cout << msg << rang::style::reset;
 }
 // print colorful (printc)
@@ -154,32 +158,7 @@ inline void resetBg() {
     std::cout << rang::bg::reset;
 }
 inline void setFg(color col) {
-    switch (col) {
-        case Red:
-        std::cout << rang::fg::red;
-        break;
-        case Green:
-        std::cout << rang::fg::green;
-        break;
-        case Blue:
-        std::cout << rang::fg::blue;
-        break;
-        case Gray:
-        std::cout << rang::fg::gray;
-        break;
-        case Cyan:
-        std::cout << rang::fg::cyan;
-        break;
-        case Yellow:
-        std::cout << rang::fg::yellow;
-        break;
-        case Magenta:
-        std::cout << rang::fg::magenta;
-        break;
-        case Black:
-        std::cout << rang::fg::black;
-        break;
-    }
+    _setFg(col);
 }
 inline void resetAll() {
     std::cout << rang::bg::reset << rang::style::reset;
