@@ -34,6 +34,7 @@ enum color {
     Magenta,
     Black
 };
+// note: Do not call function that has '_' prefix
 inline const char* _enumToString(logType type) {
     switch(type) {
         case Info:
@@ -178,13 +179,13 @@ inline void delayForSec(int sec) {
         throw std::invalid_argument("Delay argument must be > 0, got " + std::to_string(sec));
     }
 }
-inline void printAnim(std::string_view msg, int char_per_ms) {
+inline void printAnim(std::string_view msg, int mspc) {
     for (char c : msg) {
-        if(char_per_ms <= 0) {
+        if(mspc <= 0) {
             std::cout << c << std::flush;
         } else {
         std::cout << c << std::flush; 
-        delayForMillisec(char_per_ms);
+        delayForMillisec(mspc);
         }
     }
     std::cout << '\n';
