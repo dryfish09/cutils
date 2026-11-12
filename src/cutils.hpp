@@ -89,14 +89,14 @@ inline void _setFg(color col) {
 inline void log(logType typ, std::string_view text) {
     const char* type = _enumToString(typ);
     if (typ == Info) {
-        std::cout << rang::fg::cyan << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
+        std::cout << rang::fg::cyan << "[" << type << ": " << text << "]"<< rang::fg::reset << '\n';
     
     }
     else if (typ == Error || typ == Fatal) {
-        std::cerr << rang::fg::red << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
+        std::cerr << rang::fg::red << "[" << type << ": " << text << "]"<< rang::fg::reset << '\n';
     }
     else if (typ == Warn) {
-        std::cout << rang::fg::yellow << "[" << type << ": " << text << "]"<< rang::style::reset << '\n';
+        std::cout << rang::fg::yellow << "[" << type << ": " << text << "]"<< rang::fg::reset << '\n';
     }
     else {
         std::cout << "[" << type << "]" << ": " << text << '\n';
@@ -119,7 +119,7 @@ inline std::string ask(std::string_view question) {
 }
 inline void printc(std::string_view msg, color col) {
     _setFg(col);
-    std::cout << msg << rang::style::reset;
+    std::cout << msg << rang::fg::reset;
 }
 // print colorful (printc)
 // usage: printc("text", Red);
@@ -162,7 +162,7 @@ inline void setFg(color col) {
     _setFg(col);
 }
 inline void resetAll() {
-    std::cout << rang::bg::reset << rang::style::reset;
+    std::cout << rang::bg::reset << rang::fg::reset;
 }
 inline void delayForMillisec(int ms) {
     if (ms > 0) {
@@ -206,7 +206,7 @@ inline std::string getCurrentTime(const char* fmt = "%Y-%m-%d %H:%M:%S") {
     return buf;
 }
 inline void resetFg() {
-    std::cout << rang::style::reset;
+    std::cout << rang::fg::reset;
 }
 } // namespace fih
 #endif // CUTILS_HPP_INCLUDED
