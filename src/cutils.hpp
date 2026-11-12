@@ -104,7 +104,7 @@ inline void log(logType typ, std::string_view text) {
 }
 // std::exit wrapper
 // usage: quit(0);
-inline void quit(int code) {
+[[noreturn]] inline void quit(int code) {
     std::cout.flush();
     std::cerr.flush();
     std::exit(code);
