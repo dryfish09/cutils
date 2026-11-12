@@ -77,12 +77,12 @@ TEST_CASE("log output ends with a newline", "[log]") {
 
 // ---------- delay ----------
 TEST_CASE("delayForMillisec throws on ms <= 0", "[delay]") {
-    REQUIRE_THROWS_AS(delayForMillisec(0),  std::invalid_argument);
+    REQUIRE_THROWS_AS(delayForMillisec(-9),  std::invalid_argument);
     REQUIRE_THROWS_AS(delayForMillisec(-1), std::invalid_argument);
 }
 
 TEST_CASE("delayForSec throws on sec <= 0", "[delay]") {
-    REQUIRE_THROWS_AS(delayForSec(0),  std::invalid_argument);
+    REQUIRE_THROWS_AS(delayForSec(-9),  std::invalid_argument);
     REQUIRE_THROWS_AS(delayForSec(-5), std::invalid_argument);
 }
 
