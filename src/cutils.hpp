@@ -165,18 +165,18 @@ inline void resetAll() {
     std::cout << rang::bg::reset << rang::fg::reset;
 }
 inline void delayForMillisec(int ms) {
-    if (ms > 0) {
+    if (ms >= 0) {
         std::this_thread::sleep_for(std::chrono::milliseconds(ms));
     } else {
-        throw std::invalid_argument("Delay argument must be > 0, got " + std::to_string(ms));
+        throw std::invalid_argument("Delay argument must be ≥ 0, got " + std::to_string(ms));
     }
 }
 
 inline void delayForSec(int sec) {
-    if (sec > 0) {
+    if (sec >= 0) {
         std::this_thread::sleep_for(std::chrono::seconds(sec));
     } else {
-        throw std::invalid_argument("Delay argument must be > 0, got " + std::to_string(sec));
+        throw std::invalid_argument("Delay argument must be ≥ 0, got " + std::to_string(sec));
     }
 }
 inline void printAnim(std::string_view msg, int mspc) {
