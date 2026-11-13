@@ -15,6 +15,8 @@
 #include <stdexcept>
 #include <ctime>
 #include <cstring>
+#include <ios>
+#include <limits>
 namespace fih {
 // log type enum
 enum logType {
@@ -115,6 +117,10 @@ inline std::string ask(std::string_view question) {
     std::cout << rang::fg::green << question << rang::style::reset << '\n';
     std::string answer;
     std::getline(std::cin, answer);
+    if (std::cin.fail() && !std::cin.bad()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
     return answer;
 }
 inline void printc(std::string_view msg, color col) {
