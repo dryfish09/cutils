@@ -1,11 +1,14 @@
 // cutils.hpp - simple console utils for command-line app programming
 // usage: #include "cutils.hpp"
 // NOTE: THIS LIB IS IN DEVELOPMENT, you know...
-
+// for new compilers like msvc, gcc, clang, etc
 #pragma once 
+// for old compilers, it (maybe) will ignores #pragma once
 #ifndef CUTILS_HPP_INCLUDED
 #define CUTILS_HPP_INCLUDED
+// for colorful terminal stuff
 #include "./libs/rang.hpp"
+// c++ std stuff
 #include <string>
 #include <iostream>
 #include <string_view>
@@ -17,6 +20,7 @@
 #include <cstring>
 #include <ios>
 #include <limits>
+// namespace to prevent conflict with your code 
 namespace fih {
 // log type enum
 enum logType {
@@ -26,6 +30,7 @@ enum logType {
     Error,
     Fatal
 };
+// color stuff
 enum color {
     Green,
     Blue,
@@ -36,7 +41,7 @@ enum color {
     Magenta,
     Black
 };
-enum Style {
+enum style {
     Bold,
     Dim,
     Italic,
@@ -115,8 +120,10 @@ inline void log(logType typ, std::string_view text) {
         std::cout << "[" << type << "]" << ": " << text << '\n';
     }
 }
-// std::exit wrapper
-// usage: quit(0);
+/*
+    quit(int code) will flushs stdout, stderr then call std::exit(code)
+    [[noreturn]] helps we prevent warnings, logic bugs, etc.
+*/
 [[noreturn]] inline void quit(int code) {
     std::cout.flush();
     std::cerr.flush();
@@ -144,6 +151,10 @@ inline void printcl(std::string_view msg, color col) {
     printc(msg, col);
     std::cout <<'\n';
 }
+/*
+    setBg(), make your console background coorful
+    logic: you know, it's simple
+*/
 inline void setBg(color col) {
     switch (col) {
         case Red:
@@ -179,8 +190,12 @@ inline void setFg(color col) {
     _setFg(col);
 }
 inline void resetAll() {
-    std::cout << rang::bg::reset << rang::fg::reset;
+    std::cout << rang::bg::reset << rang::fg::reset << rang::style::reset;
 }
+/*
+    delayFor* (millisec & sec)
+    although <0 just ok but i don't want it lol
+*/
 inline void delayForMillisec(int ms) {
     if (ms >= 0) {
         std::this_thread::sleep_for(std::chrono::milliseconds(ms));
@@ -196,6 +211,10 @@ inline void delayForSec(int sec) {
         throw std::invalid_argument("Delay argument must be ≥ 0, got " + std::to_string(sec));
     }
 }
+/*
+    printAnim()
+    will prints the message out screen with typing animation
+*/
 inline void printAnim(std::string_view msg, int mspc) {
     for (char c : msg) {
         if(mspc <= 0) {
@@ -207,9 +226,11 @@ inline void printAnim(std::string_view msg, int mspc) {
     }
     std::cout << '\n';
 }
+// need test: ANSI maybe works incorrectly on old devices
 inline void clearConsole() {
     std::cout << "\033[2J\033[1;1H";
 }
+// need test: AI-geberated stuff
 inline std::string getCurrentTime(const char* fmt = "%Y-%m-%d %H:%M:%S") {
     std::time_t now = std::time(nullptr);
     std::tm tm_buf{};
@@ -225,7 +246,7 @@ inline std::string getCurrentTime(const char* fmt = "%Y-%m-%d %H:%M:%S") {
 inline void resetFg() {
     std::cout << rang::fg::reset;
 }
-inline void setStyle(Style style) {
+inline void setStyle(style style) {
     switch (style) {
         case Bold:
         std::cout << rang::style::bold;
