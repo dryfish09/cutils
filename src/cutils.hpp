@@ -36,6 +36,17 @@ enum color {
     Magenta,
     Black
 };
+enum Style {
+    Bold,
+    Dim,
+    Italic,
+    Underline,
+    Blink,
+    Rblink,
+    Reversed,
+    Conceal,
+    Crossed
+};
 // note: Do not call function that has '_' prefix
 inline const char* _enumToString(logType type) {
     switch(type) {
@@ -213,6 +224,37 @@ inline std::string getCurrentTime(const char* fmt = "%Y-%m-%d %H:%M:%S") {
 }
 inline void resetFg() {
     std::cout << rang::fg::reset;
+}
+inline void setStyle(Style style) {
+    switch (style) {
+        case Bold:
+        std::cout << rang::style::bold;
+        break;
+        case Dim:
+        std::cout << rang::style::dim;
+        break;
+        case Italic:
+        std::cout << rang::style::italic;
+        break;
+        case Underline:
+        std::cout << rang::style::underline;
+        break;
+        case Blink:
+        std::cout << rang::style::blink;
+        break;
+        case Rblink:
+        std::cout << rang::style::rblink;
+        break;
+        case Conceal:
+        std::cout << rang::style::conceal;
+        break;
+        case Crossed:
+        std::cout << rang::style::crossed;
+        break;
+    }
+}
+inline void resetStyle() {
+    std::cout << rang::style::reset;
 }
 } // namespace fih
 #endif // CUTILS_HPP_INCLUDED
