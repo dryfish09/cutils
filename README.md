@@ -42,6 +42,9 @@ fih::printc("msg", fih::Blue);
 > Use with you own risk!
 
 **For more example, view [CUtils's code examples](./examples/)**
+
+> [!CAUTION]
+> `fih::setStyle(Style style)` may doesn't work correctly on old devices, for more details, view [rang library's original repository]()
 ### Advanced use
 Contribute to this project
 ## Roadmap:
