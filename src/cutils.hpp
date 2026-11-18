@@ -117,7 +117,7 @@ inline void log(logType typ, std::string_view text) {
         std::cout << rang::fg::yellow << "[" << type << ": " << text << "]"<< rang::fg::reset << '\n';
     }
     else {
-        std::cout << "[" << type << "]" << ": " << text << '\n';
+        std::cout << rang::fg::gray << "[" << type << ": " << text << "]"<< rang::fg::reset << '\n';
     }
 }
 /*
@@ -134,10 +134,9 @@ inline void log(logType typ, std::string_view text) {
 inline std::string ask(std::string_view question) {
     std::cout << rang::fg::green << question << rang::style::reset << '\n';
     std::string answer;
-    std::getline(std::cin, answer);
-    if (std::cin.fail() && !std::cin.bad()) {
+    if (!std::getline(std::cin, answer)) {
         std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return "";
     }
     return answer;
 }
@@ -200,7 +199,7 @@ inline void delayForMillisec(int ms) {
     if (ms >= 0) {
         std::this_thread::sleep_for(std::chrono::milliseconds(ms));
     } else {
-        throw std::invalid_argument("Delay argument must be ≥ 0, got " + std::to_string(ms));
+        throw std::invalid_argument("Delay argument must be >= 0, got " + std::to_string(ms));
     }
 }
 
@@ -208,7 +207,7 @@ inline void delayForSec(int sec) {
     if (sec >= 0) {
         std::this_thread::sleep_for(std::chrono::seconds(sec));
     } else {
-        throw std::invalid_argument("Delay argument must be ≥ 0, got " + std::to_string(sec));
+        throw std::invalid_argument("Delay argument must be >= 0, got " + std::to_string(sec));
     }
 }
 /*
@@ -240,7 +239,9 @@ inline std::string getCurrentTime(const char* fmt = "%Y-%m-%d %H:%M:%S") {
     localtime_r(&now, &tm_buf);
 #endif
     char buf[64];
-    std::strftime(buf, sizeof(buf), fmt, &tm_buf);
+    if (std::strftime(buf, sizeof(buf), fmt, &tm_buf) == 0) {
+        return "";
+    }
     return buf;
 }
 inline void resetFg() {
@@ -265,6 +266,9 @@ inline void setStyle(style style) {
         break;
         case Rblink:
         std::cout << rang::style::rblink;
+        break;
+        case Reversed:
+        std::cout << rang::style::reversed;
         break;
         case Conceal:
         std::cout << rang::style::conceal;
