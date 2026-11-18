@@ -234,7 +234,9 @@ TEST_CASE("getCurrentTime prints when streamed", "[time]") {
     std::cout << getCurrentTime();
     REQUIRE_FALSE(cap.str().empty());
 }
-TEST_CASE("something work", "[fg") {
+TEST_CASE("something work", "[fg&style]") {
     setFg(Red);
     resetFg();
+    setStyle(Bold);
+    resetStyle();
 }
